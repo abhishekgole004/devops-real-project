@@ -33,3 +33,10 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
+      
+      - name: Update Kubernetes Deployment File
+        run: |
+          sed -i "s|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/devops-app:latest|" deployment.yaml
+
+      - name: Display Deployment File
+        run: cat deployment.yaml
